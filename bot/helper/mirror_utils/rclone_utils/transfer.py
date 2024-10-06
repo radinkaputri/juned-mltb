@@ -179,7 +179,7 @@ class RcloneTransferHelper:
             epath = f"{remote}:{rc_path}{self.name}"
             destination = epath
 
-        cmd = ['rclone', 'lsjson', '--fast-list', '--no-mimetype',
+        cmd = ['zcl', 'lsjson', '--fast-list', '--no-mimetype',
                '--no-modtime', '--config', config_path, epath]
         res, err, code = await cmd_exec(cmd)
 
@@ -289,7 +289,7 @@ class RcloneTransferHelper:
             else:
                 destination = f"{oremote}:{self.name}"
 
-            cmd = ['rclone', 'link', '--config', oconfig_path, destination]
+            cmd = ['zcl', 'link', '--config', oconfig_path, destination]
             res, err, code = await cmd_exec(cmd)
 
             if code == 0:
@@ -364,7 +364,7 @@ class RcloneTransferHelper:
 
     def __getUpdatedCommand(self, config_path, source, destination, rcflags, method):
         ext = '*.{' + ','.join(self.extension_filter) + '}'
-        cmd = ['rclone', method, '--fast-list', '--config', config_path, '-P', source, destination,
+        cmd = ['zcl', method, '--fast-list', '--config', config_path, '-P', source, destination,
                '--exclude', ext, '--ignore-case', '--low-level-retries', '1', '-M', '--log-file',
                'rlog.txt', '--log-level', 'DEBUG']
         if rcflags:
